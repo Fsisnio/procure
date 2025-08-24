@@ -31,18 +31,28 @@ git push origin main
 3. Connect your GitHub repository
 
 ### 3. Configure Web Service
-Use these settings:
+You have two deployment options:
 
+#### Option 1: Static Hosting (Recommended for React apps)
 **Basic Settings:**
-- **Name**: `e-supplier-web`
-- **Environment**: `Node`
+- **Name**: `e-supplier-web-static`
+- **Environment**: `Static Site`
 - **Region**: Choose closest to your users
 - **Branch**: `main`
 - **Root Directory**: Leave empty (root of repo)
 
 **Build & Deploy:**
 - **Build Command**: `npm install && npm run build`
-- **Start Command**: `npm run start:prod`
+- **Publish Directory**: `build`
+- **Auto-Deploy**: ✅ Enabled
+
+#### Option 2: Docker Deployment
+**Basic Settings:**
+- **Name**: `e-supplier-web-docker`
+- **Environment**: `Docker`
+- **Region**: Choose closest to your users
+- **Branch**: `main`
+- **Dockerfile Path**: `./Dockerfile`
 - **Auto-Deploy**: ✅ Enabled
 
 **Environment Variables:**

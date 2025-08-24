@@ -450,7 +450,7 @@ const ProductsList: React.FC = () => {
     doc.text('Dispo = Disponible, Rupture = En rupture de stock, Discont = Discontinué', 20, legendY + 8);
     
     // Footer
-    const pageCount = doc.internal.getNumberOfPages();
+    const pageCount = (doc as any).internal.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
       

@@ -459,7 +459,7 @@ const SuppliersList: React.FC = () => {
     doc.text('A = Actif, E = En attente, I = Inactif', 20, legendY + 8);
     
     // Footer
-    const pageCount = doc.internal.getNumberOfPages();
+    const pageCount = (doc as any).internal.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
       
