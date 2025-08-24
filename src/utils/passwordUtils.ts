@@ -70,3 +70,4 @@ export const generateSecurePassword = (length: number = 12): string => {
   // Mélanger les caractères
   return password.split('').sort(() => Math.random() - 0.5).join('');
 };
+

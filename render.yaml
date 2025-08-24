@@ -3,7 +3,7 @@ services:
   - type: web
     name: e-supplier-web-static
     env: static
-    buildCommand: npm install && npm run build
+    buildCommand: npm ci && npm run build
     staticPublishPath: ./build
     envVars:
       - key: NODE_ENV
@@ -16,22 +16,6 @@ services:
     autoDeploy: true
     branch: main
 
-  # Alternative: Docker-based deployment
-  - type: web
-    name: e-supplier-web-docker
-    env: docker
-    dockerfilePath: ./Dockerfile
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: REACT_APP_API_URL
-        value: https://e-supplier-web-docker.onrender.com
-      - key: REACT_APP_DATABASE_URL
-        value: postgresql://procure_poco_user:4wKCy8V89mbWFlJGy9Eke20iFMNbQWV1@dpg-d2lh2truibrs73f86cs0-a.oregon-postgres.render.com/procure_poco
-    healthCheckPath: /health
-    autoDeploy: true
-    branch: main
-
   # Database service (if you want to create a new one)
   # - type: pserv
   #   name: e-supplier-db
@@ -39,3 +23,20 @@ services:
   #   plan: free
   #   maxConnections: 20
   #   ipAllowList: []
+
+# Commented out Docker deployment due to static file serving issues
+# Alternative: Docker-based deployment (currently disabled)
+# - type: web
+#   name: e-supplier-web-docker
+#   env: docker
+#   dockerfilePath: ./Dockerfile
+#   envVars:
+#     - key: NODE_ENV
+#       value: production
+#     - key: REACT_APP_API_URL
+#       value: https://e-supplier-web-docker.onrender.com
+#     - key: REACT_APP_DATABASE_URL
+#       value: postgresql://procure_poco_user:4wKCy8V89mbWFlJGy9Eke20iFMNbQWV1@dpg-d2lh2truibrs73f86cs0-a.oregon-postgres.render.com/procure_poco
+#   healthCheckPath: /health
+#   autoDeploy: true
+#   branch: main

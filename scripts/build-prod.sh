@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 Building E-Supplier for production..."
+echo "🚀 Building ProcureX for production..."
 
 # Clean previous build
 echo "🧹 Cleaning previous build..."
@@ -8,26 +8,42 @@ rm -rf build/
 
 # Install dependencies
 echo "📦 Installing dependencies..."
-npm ci --only=production
+npm ci
 
 # Build the application
 echo "🔨 Building application..."
 npm run build
 
-# Verify build
-if [ -d "build" ]; then
-    echo "✅ Build successful!"
-    echo "📁 Build directory created at: $(pwd)/build"
-    echo "📊 Build size: $(du -sh build | cut -f1)"
-else
-    echo "❌ Build failed!"
+# Verify build output
+echo "✅ Verifying build output..."
+if [ ! -f "build/index.html" ]; then
+    echo "❌ Error: build/index.html not found"
     exit 1
 fi
 
-# Create deployment package
-echo "📦 Creating deployment package..."
-tar -czf e-supplier-build.tar.gz build/
+if [ ! -f "build/favicon.ico" ]; then
+    echo "❌ Error: build/favicon.ico not found"
+    exit 1
+fi
 
-echo "🎉 Production build ready!"
-echo "📦 Deployment package: e-supplier-build.tar.gz"
-echo "🌐 Ready to deploy on Render!"
+if [ ! -f "build/logo192.png" ]; then
+    echo "❌ Error: build/logo192.png not found"
+    exit 1
+fi
+
+if [ ! -f "build/logo512.png" ]; then
+    echo "❌ Error: build/logo512.png not found"
+    exit 1
+fi
+
+if [ ! -f "build/apple-touch-icon.png" ]; then
+    echo "❌ Error: build/apple-touch-icon.png not found"
+    exit 1
+fi
+
+echo "✅ All required files are present in build directory"
+echo "📁 Build directory contents:"
+ls -la build/
+
+echo "🎉 Build completed successfully!"
+echo "📦 Ready for deployment to Render"
