@@ -1,0 +1,27 @@
+services:
+  # Web service for the React application
+  - type: web
+    name: e-supplier-web
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: REACT_APP_API_URL
+        value: https://e-supplier-web.onrender.com
+      - key: REACT_APP_DATABASE_URL
+        value: postgresql://procure_poco_user:4wKCy8V89mbWFlJGy9Eke20iFMNbQWV1@dpg-d2lh2truibrs73f86cs0-a.oregon-postgres.render.com/procure_poco
+      - key: PORT
+        value: 10000
+    healthCheckPath: /
+    autoDeploy: true
+    branch: main
+
+  # Database service (if you want to create a new one)
+  # - type: pserv
+  #   name: e-supplier-db
+  #   env: postgresql
+  #   plan: free
+  #   maxConnections: 20
+  #   ipAllowList: []
