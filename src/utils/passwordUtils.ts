@@ -33,7 +33,17 @@ export const generateUserDefaultPassword = (user: { firstName: string; lastName:
     .replace(/[^a-zA-Z]/g, '')
     .substring(0, 3);
   
-  return `${cleanCompanyName}${cleanFirstName}123!`;
+  const password = `${cleanCompanyName}${cleanFirstName}123!`;
+  
+  // Log pour débogage
+  console.log('=== GENERATING PASSWORD ===');
+  console.log('User:', user);
+  console.log('Tenant:', tenant);
+  console.log('Clean company name:', cleanCompanyName);
+  console.log('Clean first name:', cleanFirstName);
+  console.log('Generated password:', password);
+  
+  return password;
 };
 
 /**

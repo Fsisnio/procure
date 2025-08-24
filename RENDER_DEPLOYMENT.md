@@ -26,7 +26,7 @@ ls -la public/
 ### 2. Push vers GitHub
 ```bash
 git add .
-git commit -m "Fix: Add missing icon files and optimize deployment"
+git commit -m "Fix: Add missing icon files and optimize deployment for Render"
 git push origin main
 ```
 
@@ -52,16 +52,57 @@ git push origin main
 - Le service Docker `e-supplier-web-docker` est temporairement désactivé
 - Le déploiement statique gère automatiquement les fichiers
 
+### Problème : Erreur "Invalid credentials" après création de tenant
+**Solution appliquée :**
+- ✅ Correction de la double génération des mots de passe
+- ✅ Ajout de logs de débogage pour l'authentification
+- ✅ Scripts de test et de diagnostic
+- ✅ Guide de résolution des problèmes d'authentification
+
+**Cause identifiée :** Les mots de passe étaient générés deux fois (création + affichage), créant une incohérence entre les identifiants affichés et les données stockées.
+
+## 🔐 Résolution des Problèmes d'Authentification
+
+### Symptômes
+- Création de tenant réussie
+- Identifiants affichés lors de la création
+- Échec de connexion avec "Invalid credentials"
+
+### Solutions Appliquées
+1. **Correction du code** : Suppression de la double génération des mots de passe
+2. **Logs de débogage** : Ajout de logs détaillés pour tracer le problème
+3. **Scripts de test** : Validation de la cohérence des mots de passe
+4. **Guide de diagnostic** : Procédures étape par étape
+
+### Diagnostic Rapide
+```javascript
+// Dans la console du navigateur
+console.log('Users:', JSON.parse(localStorage.getItem('users')));
+console.log('Tenants:', JSON.parse(localStorage.getItem('tenants')));
+```
+
+### Réinitialisation des Données
+Si le problème persiste, utilisez le script de réinitialisation :
+```bash
+node scripts/reset-localStorage.js
+```
+
 ## 📁 Structure des Fichiers
 ```
 public/
-├── favicon.ico (3.87 KB)
-├── logo192.png (5.35 KB)
-├── logo512.png (9.66 KB)
-├── apple-touch-icon.png (5.35 KB)
-├── apple-touch-icon-precomposed.png (5.35 KB)
-├── index.html
-└── manifest.json
+├── favicon.ico (3.87 KB) ✅
+├── logo192.png (5.35 KB) ✅
+├── logo512.png (9.66 KB) ✅
+├── apple-touch-icon.png (5.35 KB) ✅
+├── apple-touch-icon-precomposed.png (5.35 KB) ✅
+├── index.html ✅
+└── manifest.json ✅
+
+scripts/
+├── build-prod.sh ✅
+├── test-password-generation.js ✅
+├── debug-users.js ✅
+└── reset-localStorage.js ✅
 ```
 
 ## 🚫 Déploiement Docker (Désactivé)
@@ -76,9 +117,27 @@ Le déploiement Docker est actuellement désactivé en raison de problèmes avec
 2. Vérifier que le favicon s'affiche dans l'onglet du navigateur
 3. Vérifier que les icônes PWA fonctionnent
 4. Tester la navigation et les fonctionnalités principales
+5. **IMPORTANT** : Tester la création de tenant et la connexion
+
+## 🔍 Troubleshooting Avancé
+
+### Problèmes d'Authentification
+- Consulter [AUTHENTICATION_TROUBLESHOOTING.md](AUTHENTICATION_TROUBLESHOOTING.md)
+- Vérifier les logs de la console du navigateur
+- Utiliser les scripts de diagnostic fournis
+
+### Problèmes de Build
+- Exécuter `./scripts/build-prod.sh` localement
+- Vérifier les logs de build sur Render
+- S'assurer que tous les fichiers d'icônes sont présents
 
 ## 📞 Support
-Si des problèmes persistent :
-1. Vérifier les logs de build sur Render
-2. Vérifier que tous les fichiers d'icônes sont présents dans le dossier `build/`
-3. Utiliser le script `./scripts/build-prod.sh` pour tester localement
+
+Pour deployment issues, refer to:
+- [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md) - Complete deployment guide
+- [DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md) - Verification checklist
+- [AUTHENTICATION_TROUBLESHOOTING.md](AUTHENTICATION_TROUBLESHOOTING.md) - Authentication issues guide
+
+---
+
+**🎉 Ready for deployment!** All icon, static file, and authentication issues have been resolved.

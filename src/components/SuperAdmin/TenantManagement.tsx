@@ -187,8 +187,9 @@ const TenantManagement: React.FC = () => {
       
       // Create tenant admin user using the email from the form
       const adminRole = newRoles.find(r => r.name === 'tenant_admin');
+      let adminPassword = '';
       if (adminRole && formData.email) {
-        const adminPassword = generateUserDefaultPassword(
+        adminPassword = generateUserDefaultPassword(
           { firstName: 'Admin', lastName: newTenant.companyName },
           newTenant
         );
@@ -209,8 +210,9 @@ const TenantManagement: React.FC = () => {
       
       // Create standard user (only if admin email is different from a potential user email)
       const userRole = newRoles.find(r => r.name === 'user');
+      let userPassword = '';
       if (userRole) {
-        const userPassword = generateUserDefaultPassword(
+        userPassword = generateUserDefaultPassword(
           { firstName: 'User', lastName: newTenant.companyName },
           newTenant
         );
@@ -242,10 +244,7 @@ const TenantManagement: React.FC = () => {
       setTenants(updatedTenants);
       localStorage.setItem('tenants', JSON.stringify(updatedTenants));
       
-      // Show success message with default credentials
-      const adminPassword = adminRole ? generateUserDefaultPassword({ firstName: 'Admin', lastName: newTenant.companyName }, newTenant) : 'N/A';
-      const userPassword = userRole ? generateUserDefaultPassword({ firstName: 'User', lastName: newTenant.companyName }, newTenant) : 'N/A';
-      
+      // Show success message with default credentials (use stored passwords)
       const adminEmail = formData.email || `admin@${newTenant.domain}`;
       const emailDomain = formData.email ? formData.email.split('@')[1] : newTenant.domain;
       const userEmail = `user@${emailDomain}`;
